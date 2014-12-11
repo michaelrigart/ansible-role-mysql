@@ -1,0 +1,22 @@
+---
+
+- include: package.yml
+  tags: package
+
+- include: configuration.yml
+  when: mysql_server_install
+  tags: configuration
+
+- include: replication.yml
+  when: mysql_role is defined
+  tags:
+    - configuration
+    - replication
+
+- name: start/stop postgresql service
+  service:
+    name: postgresql
+    state: '{{ mysql_service_state }}'
+    enabled: '{{ mysql_service_enabled }}'
+  when: mysql_server_install
+  tags: service

@@ -1,0 +1,35 @@
+---
+
+- name: create the replication users
+  mysql_user:
+    name: '{{ item.name }}'
+    host: '%'
+    password: '{{ item.password }}'
+    priv: '*.*:REPLICATION SLAVE'
+    state: present
+  with_items: mysql_replication_user
+  when: mysql_role == 'master'
+
+- name: check if slave is already configured for replication
+  mysql_replication:
+    mode: getslave
+  ignore_errors: true
+  register: slave
+  when: mysql_role == 'slave'
+
+- name: get the current master servers replication status
+  mysql_replication:
+    mode: getmaster
+  delegate_to: '{{ mysql_replication_master }}'
+  register: replication_status
+  when: slave|failed and mysqld_role == 'slave' and mysql_replication_master is defined
+
+- name: change the master in slave to start the replication
+  mysql_replication:
+    mode: changemaster
+    master_host: '{{ mysql_replication_master }}'
+    master_log_file: '{{ replication_status.File }}'
+    master_log_pos: '{{ replication_status.Position }}'
+    master_user: '{{ mysql_replication_user[0].name }}'
+    master_password: '{{ mysql_replication_user[0].password }}'
+  when: slave|failed and mysql_role == 'slave' and mysql_replication_master is defined

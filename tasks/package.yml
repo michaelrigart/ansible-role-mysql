@@ -1,0 +1,36 @@
+---
+
+- name: install specific mysql server version
+  apt:
+    pkg: 'mysql-server={{ mysql_server_pkg_version }}'
+    state: installed
+    update_cache: yes
+    cache_valid_time: 3600
+  when: mysql_server_install and mysql_server_pkg_version
+
+- name: install current/latest mysql server version
+  apt:
+    pkg: '{{ item }}'
+    state: '{{ mysql_server_pkg_state }}'
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items:
+    - mysql-server
+    - python-mysqldb
+  when: mysql_server_install and not mysql_server_pkg_version
+
+- name: install specific mysql client version
+  apt:
+    pkg: 'mysql-client={{ mysql_client_pkg_version }}'
+    state: installed
+    update_cache: yes
+    cache_valid_time: 3600
+  when: mysql_client_install and mysql_client_pkg_version
+
+- name: install current/latest mysql client version
+  apt:
+    pkg: mysql-client
+    state: '{{ mysql_client_pkg_state }}'
+    update_cache: yes
+    cache_valid_time: 3600
+  when: mysql_client_install and not mysql_client_pkg_version

@@ -1,0 +1,11 @@
+{% for section, config in mysql_config.iteritems() %}
+[{{ section }}]
+{% for key, value in config.iteritems() %}
+{% if value %}
+{{ key }} = {{ value }}
+{% else %}
+{{ key }}
+{% endif %}
+{% endfor %}
+
+{% endfor %}
