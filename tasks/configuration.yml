@@ -5,7 +5,7 @@
     src: my.cnf.j2
     dest: /etc/mysql/my.cnf
     owner: root
-    owner: root
+    group: root
     mode: 0644
   notify: mysql_restart
 
