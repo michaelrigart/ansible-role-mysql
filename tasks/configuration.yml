@@ -35,7 +35,7 @@
 - name: copy .my.cnf file with root password credentials
   template:
     src: root_my.cnf.j2
-    dest: ~/.my.cnf
+    dest: /root/.my.cnf
     owner: root
     group: root
     mode: 0600
