@@ -13,9 +13,9 @@
     - configuration
     - replication
 
-- name: start/stop postgresql service
+- name: start/stop mysql service
   service:
-    name: postgresql
+    name: mysql
     state: '{{ mysql_service_state }}'
     enabled: '{{ mysql_service_enabled }}'
   when: mysql_server_install
