@@ -1,5 +1,15 @@
 ---
 
+- name: update mysql root password for all root accounts
+  mysql_user:
+    name: root
+    host: '{{ item }}'
+    password: '{{ mysql_root_password }}'
+  with_items:
+   - 127.0.0.1
+   - ::1
+   - localhost
+
 - name: copy the my.cnf file
   template:
     src: my.cnf.j2
@@ -31,16 +41,6 @@
     name: root
     host: '{{ ansible_hostname }}'
     state: absent
-
-- name: update mysql root password for all root accounts
-  mysql_user:
-    name: root
-    host: '{{ item }}'
-    password: '{{ mysql_root_password }}'
-  with_items:
-   - 127.0.0.1
-   - ::1
-   - localhost
 
 - name: remove the test database
   mysql_db:
