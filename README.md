@@ -1,6 +1,6 @@
 Ansible Mysql Role
 ==================
-[![Build Status](https://travis-ci.org/michaelrigart/ansible-role-mysql.svg?branch=master)](https://travis-ci.org/michaelrigart/ansible-role-mysql)
+[![Build Status](https://semaphoreci.com/api/v1/projects/3f4eaa5c-6d48-4a16-8bd0-ed4d6450d566/461757/badge.svg)](https://semaphoreci.com/michaelrigart/ansible-role-mysql) [![Build Status](https://travis-ci.org/michaelrigart/ansible-role-mysql.svg?branch=master)](https://travis-ci.org/michaelrigart/ansible-role-mysql)
 
 An ansible role for installing and configuring MySQL client / server
 
