@@ -1,5 +1,16 @@
 ---
 
+- name: debug .my.cnf
+  shell: cat /root/.my.cnf
+  register: output
+  ignore_errors: yes
+  changed_when: False
+
+- name: show debug
+  debug: var=output
+  ignore_errors: yes
+  changed_when: False
+
 - name: update mysql root password for all root accounts
   mysql_user:
     name: root
@@ -18,15 +29,6 @@
     group: root
     mode: 0644
   notify: mysql_restart
-
-- name: debug .my.cnf
-  shell: cat /root/.my.cnf
-  register: output
-  ignore_errors: yes
-
-- name: show debug
-  debug: var=output
-  ignore_errors: yes
 
 - name: copy .my.cnf file with root password credentials
   template:
