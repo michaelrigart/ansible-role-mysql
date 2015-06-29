@@ -21,6 +21,18 @@
    - 127.0.0.1
    - ::1
    - localhost
+  when: ansible_hostname != 'localhost'
+
+- name: update mysql root password for all root accounts
+  mysql_user:
+    user: root
+    host: '{{ item }}'
+    password: '{{ mysql_root_password }}'
+  with_items:
+   - 127.0.0.1
+   - ::1
+   - localhost
+  when: ansible_hostname == 'localhost'
 
 - name: copy the my.cnf file
   template:
