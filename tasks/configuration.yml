@@ -34,6 +34,12 @@
    - localhost
   when: ansible_hostname == 'localhost'
 
+- name: reload privilege tables
+  command: 'mysql -ne "{{ item }}"'
+  with_items:
+    - FLUSH PRIVILEGES
+  changed_when: False
+
 - name: copy the my.cnf file
   template:
     src: my.cnf.j2
