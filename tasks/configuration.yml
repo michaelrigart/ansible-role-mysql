@@ -1,16 +1,5 @@
 ---
 
-- name: debug .my.cnf
-  shell: cat /root/.my.cnf
-  register: output
-  ignore_errors: yes
-  changed_when: False
-
-- name: show debug
-  debug: var=output
-  ignore_errors: yes
-  changed_when: False
-
 - name: update mysql root password for all root accounts
   mysql_user:
     user: root
