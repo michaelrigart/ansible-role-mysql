@@ -7,7 +7,7 @@
     password: '{{ item.password }}'
     priv: '*.*:REPLICATION SLAVE'
     state: present
-  with_items: mysql_replication_user
+  with_items: '{{ mysql_replication_user }}'
   when: mysql_role == 'master'
 
 - name: check if slave is already configured for replication
